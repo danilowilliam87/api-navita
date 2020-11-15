@@ -1,0 +1,1 @@
+alter table patrimonio add constraint fk_marca_patrimonio foreign key(marca_id) references marca(id);
