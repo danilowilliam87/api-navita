@@ -77,19 +77,19 @@ public class PatrimonioController {
         List<PatrimonioResponseDTO>responseDTOS = new ArrayList<>();
         List<Patrimonio>patrimonios = new ArrayList<>();
 
-        patrimonios = service.findByNomeLike(nome);
+        patrimonios = service.findAllByNomeLike(nome);
         for(int i = 0; i < patrimonios.size(); i++){
             responseDTOS.add(PatrimonioResponseDTO.converterParapatrimonioResponseDTO(patrimonios.get(i)));
         }
         return responseDTOS;
     }
 
-    @GetMapping("/lista-marca/{marca}")
-    public List<PatrimonioResponseDTO>listarPorMarca(String marca){
+    @GetMapping("/lista-marca/{id}")
+    public List<PatrimonioResponseDTO>listarPorMarca(@PathVariable("id") Long marcaId){
         List<PatrimonioResponseDTO>responseDTOS = new ArrayList<>();
         List<Patrimonio>patrimonios = new ArrayList<>();
 
-        patrimonios = service.findByMarca(marca);
+        patrimonios = service.findAllByMarca(marcaId);
 
         for(int i = 0; i < patrimonios.size(); i++){
             responseDTOS.add(PatrimonioResponseDTO.converterParapatrimonioResponseDTO(patrimonios.get(i)));

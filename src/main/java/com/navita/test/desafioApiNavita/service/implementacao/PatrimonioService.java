@@ -33,11 +33,6 @@ public class PatrimonioService implements PatrimonioRn {
     }
 
     @Override
-    public List<Patrimonio> findByMarca(String marca) {
-        return repository.findAllByMarcaLike(marca);
-    }
-
-    @Override
     public boolean update(Patrimonio patrimonio, Long numeroTombo) {
         Optional<Patrimonio>busca = repository.findById(numeroTombo);
         Patrimonio patrimonio1 = new Patrimonio();
@@ -65,7 +60,12 @@ public class PatrimonioService implements PatrimonioRn {
 
 
     @Override
-    public List<Patrimonio> findByNomeLike(String nome) {
+    public List<Patrimonio> findAllByNomeLike(String nome) {
         return repository.findByNomeLike(nome);
+    }
+
+    @Override
+    public List<Patrimonio> findAllByMarca(Long marcaId) {
+        return repository.findAllByMarca(marcaId);
     }
 }

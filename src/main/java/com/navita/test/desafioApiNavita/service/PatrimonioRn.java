@@ -11,8 +11,8 @@ public interface PatrimonioRn {
     public Patrimonio save(Patrimonio patrimonio);
     public Optional<Patrimonio> findById(Long numeroTombo);
     public List<Patrimonio>list();
-    public List<Patrimonio> findByMarca(String marca);
+    public List<Patrimonio> findAllByMarca(Long marcaId);
     public boolean update(Patrimonio patrimonio, Long numeroTombo);
     public boolean delete(Long numeroTombo);
-    public List<Patrimonio>findByNomeLike(String nome);
+    public List<Patrimonio>findAllByNomeLike(String nome);
 }

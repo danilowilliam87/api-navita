@@ -2,6 +2,7 @@ package com.navita.test.desafioApiNavita.model;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Builder
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -30,6 +31,11 @@ public class Usuario {
      public Usuario(String nome, String email, String senha){
           this.nome = nome;
           this.email = email;
+          this.senha = senha;
+     }
+
+     public Usuario(String nome, String senha){
+          this.nome = nome;
           this.senha = senha;
      }
 
