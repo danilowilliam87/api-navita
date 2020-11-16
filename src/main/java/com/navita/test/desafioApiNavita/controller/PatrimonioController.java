@@ -36,16 +36,14 @@ public class PatrimonioController {
     }
 
     @PutMapping("/atualizar/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@RequestBody PatrimonioDTO patrimonioDTO,
+    public ResponseEntity<PatrimonioResponseDTO> atualizar(@RequestBody PatrimonioDTO patrimonioDTO,
                                                           @PathVariable("id") Long id){
-        service.findById(id)
-                .map(patrimonio -> {
-                    patrimonio.setNome(patrimonioDTO.getNome());
-                    patrimonio.setDescricao(patrimonio.getDescricao());
-                    patrimonio.setMarca(patrimonioDTO.getMarca());
-                    return service.save(patrimonio);
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Patrimômio Não localizado"));
+        if (service.update(patrimonioDTO.converterParaPatrimonio(),id)){
+            return new ResponseEntity<>(PatrimonioResponseDTO.converterParapatrimonioResponseDTO(patrimonioDTO.
+                    converterParaPatrimonio()),HttpStatus.OK);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Impossível atualizar registro");
+        }
     }
 
     @DeleteMapping("/delete/{numero}")

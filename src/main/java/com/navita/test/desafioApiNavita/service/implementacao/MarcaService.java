@@ -55,4 +55,8 @@ public class MarcaService implements MarcaRn {
         }
         return status;
     }
+
+    public List<Marca> findAll() {
+        return repository.findAll();
+    }
 }

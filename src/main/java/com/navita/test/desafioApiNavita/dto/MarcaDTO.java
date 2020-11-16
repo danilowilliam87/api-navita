@@ -14,4 +14,8 @@ public class MarcaDTO {
     @NotBlank
     private String nome;
 
+    public Marca converterParaMarca(){
+        return new Marca(nome);
+    }
+
 }

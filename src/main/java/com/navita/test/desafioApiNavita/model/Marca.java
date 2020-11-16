@@ -19,4 +19,8 @@ public class Marca {
     private Long id;
     @Column(nullable = false, unique = true)
     private String nome;
+
+    public Marca(String nome){
+        this.nome = nome;
+    }
 }

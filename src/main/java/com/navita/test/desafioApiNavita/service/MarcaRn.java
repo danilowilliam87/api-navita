@@ -15,5 +15,6 @@ public interface MarcaRn {
     public Optional<Marca>findByNome(String nome);
     public boolean update(Marca marca, Long id);
     public boolean delete(Long id);
+    public List<Marca>findAll();
 
 }

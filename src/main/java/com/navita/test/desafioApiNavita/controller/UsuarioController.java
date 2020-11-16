@@ -40,7 +40,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponseDTO>getUsuarioById(@PathVariable("id") Long id){
         Optional<Usuario> usuario = service.findById(id);
         return usuario.map(value -> new ResponseEntity<>(UsuarioResponseDTO.converterParaResponseDTO(value), HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuario não encontrado"));
 
     }
 
@@ -48,7 +48,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponseDTO>getUsuarioByNome(@PathVariable("nome") String nome){
         Optional<Usuario> usuario = service.findByNameLike(nome);
         return usuario.map(value -> new ResponseEntity<>(UsuarioResponseDTO.converterParaResponseDTO(value), HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND,"usuario não encontrado"));
 
     }
 
@@ -56,7 +56,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponseDTO>getUsuarioByEmail(@PathVariable("email") String email){
         Optional<Usuario> usuario = service.findByEmailLike(email);
         return usuario.map(value -> new ResponseEntity<>(UsuarioResponseDTO.converterParaResponseDTO(value), HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Email não encontrado"));
     }
 
 
@@ -68,7 +68,7 @@ public class UsuarioController {
         if (atualizar && atualizado.isPresent()){
             return new ResponseEntity<>(UsuarioResponseDTO.converterParaResponseDTO(atualizado.get()), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"Impossível atualizar");
         }
     }
 
@@ -88,7 +88,7 @@ public class UsuarioController {
         if (service.delete(id)){
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Não existe registro com esse Id");
         }
     }
 
