@@ -20,14 +20,11 @@ public class PatrimonioService implements PatrimonioRn {
         return repository.save(patrimonio);
     }
 
+
+
     @Override
-    public Patrimonio findById(Long numero_tombo) {
-        Optional<Patrimonio>busca = repository.findById(numero_tombo);
-        Patrimonio patrimonio = new Patrimonio();
-        if (busca.isPresent()){
-            patrimonio = busca.get();
-        }
-        return patrimonio;
+    public Optional<Patrimonio> findById(Long numeroTombo) {
+           return repository.findById(numeroTombo);
     }
 
     @Override
@@ -36,30 +33,39 @@ public class PatrimonioService implements PatrimonioRn {
     }
 
     @Override
-    public Patrimonio findByMarca(String marca) {
-        Optional<Patrimonio>busca = repository.findByMarca(marca);
-        Patrimonio patrimonio = new Patrimonio();
-        if (busca.isPresent()){
-            patrimonio = busca.get();
-        }
-        return patrimonio;
+    public List<Patrimonio> findByMarca(String marca) {
+        return repository.findAllByMarcaLike(marca);
     }
 
     @Override
-    public Patrimonio update(Patrimonio patrimonio, Long numeroTombo) {
+    public boolean update(Patrimonio patrimonio, Long numeroTombo) {
         Optional<Patrimonio>busca = repository.findById(numeroTombo);
         Patrimonio patrimonio1 = new Patrimonio();
+        boolean status = false;
         if (busca.isPresent()){
             patrimonio1.setNome(patrimonio.getNome());
             patrimonio1.setMarca(patrimonio.getMarca());
             patrimonio1.setDescricao(patrimonio.getDescricao());
             repository.save(patrimonio1);
+            status = true;
         }
-        return patrimonio1;
+        return status;
     }
 
     @Override
-    public void delete(Long numeroTombo) {
-        repository.deleteById(numeroTombo);
+    public boolean delete(Long numeroTombo) {
+        Optional<Patrimonio>busca = repository.findById(numeroTombo);
+        boolean status = false;
+        if (busca.isPresent()){
+            repository.deleteById(numeroTombo);
+            status = true;
+        }
+        return status;
+    }
+
+
+    @Override
+    public List<Patrimonio> findByNomeLike(String nome) {
+        return repository.findByNomeLike(nome);
     }
 }

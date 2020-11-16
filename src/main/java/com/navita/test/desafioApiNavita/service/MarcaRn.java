@@ -13,7 +13,7 @@ public interface MarcaRn {
     public Marca save(Marca marca);
     public Optional<Marca>findById(Long id);
     public Optional<Marca>findByNome(String nome);
-    public Marca update(Marca marca, Long id);
+    public boolean update(Marca marca, Long id);
     public boolean delete(Long id);
 
 }

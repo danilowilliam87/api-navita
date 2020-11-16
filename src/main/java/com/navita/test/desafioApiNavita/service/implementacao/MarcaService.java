@@ -28,19 +28,21 @@ public class MarcaService implements MarcaRn {
 
     @Override
     public Optional<Marca> findByNome(String nome) {
-        return repository.findByNome(nome);
+        return repository.findByNomeLike(nome);
     }
 
     @Override
-    public Marca update(Marca marca, Long id) {
+    public boolean update(Marca marca, Long id) {
         Optional<Marca>busca = repository.findById(id);
         Marca nova = new Marca();
+        boolean status = false;
         if (busca.isPresent()){
             nova = busca.get();
             nova.setNome(marca.getNome());
             repository.save(nova);
+            status = true;
         }
-        return nova;
+        return status;
     }
 
     @Override

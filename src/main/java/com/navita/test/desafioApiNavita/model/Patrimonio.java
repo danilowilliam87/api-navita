@@ -26,4 +26,10 @@ public class Patrimonio {
     @JoinColumn(name = "marca_id")
     private Marca marca;
 
+    public Patrimonio(String nome, Marca marca, String descricao){
+        this.nome = nome;
+        this.marca = marca;
+        this.descricao = descricao;
+    }
+
 }
