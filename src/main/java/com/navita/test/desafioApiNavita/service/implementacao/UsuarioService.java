@@ -21,18 +21,13 @@ public class UsuarioService implements UsuarioRn {
 
     @Override
     public Usuario save(Usuario usuario) {
-        Optional<Usuario>buscaporEmail = repository.findByEmail(usuario.getEmail());
+        Optional<Usuario>buscaporEmail = repository.findByEmailLike(usuario.getEmail());
         return repository.save(usuario);
     }
 
     @Override
-    public Usuario findById(Long id) {
-        Optional<Usuario>busca =  repository.findById(id);
-        Usuario usuario = new Usuario();
-        if(busca.isPresent()) {
-            usuario = busca.get();
-        }
-        return usuario;
+    public Optional<Usuario> findById(Long id) {
+        return repository.findById(id);
     }
 
     @Override
@@ -41,27 +36,18 @@ public class UsuarioService implements UsuarioRn {
     }
 
     @Override
-    public Usuario findByName(String nome) {
-         Optional<Usuario>busca = repository.findByNome(nome);
-         Usuario usuario = new Usuario();
-         if (busca.isPresent()){
-             usuario = busca.get();
-         }
-         return usuario;
+    public Optional<Usuario> findByNameLike(String nome) {
+         return repository.findByNomeLike(nome);
     }
 
     @Override
-    public Usuario findByEmail(String email) {
-        Usuario usuario = new Usuario();
-        Optional<Usuario>busca = repository.findByEmail(email);
-        if (busca.isPresent()){
-            usuario = busca.get();
-        }
-        return usuario;
+    public Optional<Usuario> findByEmailLike(String email) {
+        return repository.findByEmailLike(email);
     }
 
     @Override
-    public Usuario update(Usuario usuario, Long id) {
+    public boolean update(Usuario usuario, Long id) {
+        boolean status = false;
         Optional<Usuario>busca = repository.findById(id);
         Usuario atualizar = new Usuario();
         if (busca.isPresent()){
@@ -69,13 +55,20 @@ public class UsuarioService implements UsuarioRn {
             atualizar.setNome(usuario.getNome());
             atualizar.setEmail(usuario.getEmail());
             atualizar.setSenha(usuario.getSenha());
-
+            repository.save(atualizar);
+            status = true;
         }
-        return repository.save(atualizar);
+        return status;
     }
 
     @Override
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public boolean delete(Long id) {
+        boolean status = false;
+        Optional<Usuario>busca = repository.findById(id);
+        if (busca.isPresent()){
+            repository.deleteById(id);
+            status = true;
+        }
+        return status;
     }
 }

@@ -16,8 +16,7 @@ import javax.validation.constraints.NotBlank;
 public class Marca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
-    @NotBlank(message = "campo obrigatório")
+    @Column(nullable = false, unique = true)
     private String nome;
 }
